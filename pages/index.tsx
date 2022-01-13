@@ -3,8 +3,24 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+type Todo = {
+    value: string;
+}
+
 export default function Home() {
     const [text, setText] = useState('');
+    const [todos, setTodos] = useState<Todo[]>([]);
+
+    const handleOnSubmit = () => {
+        if (!text) return
+
+        const newTodo: Todo = {
+            value: text,
+        };
+
+        setTodos([newTodo, ...todos]);
+        setText('');
+    };
 
 
     return (
@@ -18,7 +34,12 @@ export default function Home() {
             <main className={styles.main}>
                 <h1 className={styles.title}>ToDo App</h1>
                 <div>
-                    <form onSubmit={(e) => e.preventDefault()}>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleOnSubmit();
+                        }}
+                    >
                         <input type="text"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
@@ -26,7 +47,7 @@ export default function Home() {
                         <input
                             type="submit"
                             value="追加"
-                            onSubmit={(e) => e.preventDefault()}
+                            onSubmit={handleOnSubmit}
                         />
                     </form>
                 </div>
