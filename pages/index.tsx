@@ -46,10 +46,10 @@ export default function Home() {
         setTodos(newTodos);
     };
 
-    const handleOnChecked = (id: number, checked: boolean) => {
+    const handleOnChecked = (id: number) => {
         const newTodos = todos.map((todo) => {
             if (todo.id === id) {
-                todo.checked = !checked;
+                todo.checked = !todo.checked;
             }
             return todo;
         });
@@ -57,10 +57,10 @@ export default function Home() {
         setTodos(newTodos);
     };
 
-    const handleOnRemove = (id: number, removed: boolean) => {
+    const handleOnRemove = (id: number) => {
         const newTodos = todos.map((todo) => {
             if (todo.id === id) {
-                todo.removed = !removed;
+                todo.removed = !todo.removed;
             }
             return todo;
         });
@@ -137,22 +137,22 @@ export default function Home() {
                         </form>
                     )}
                     <ul>
-                        {filteredTodos.map((todo) => {
+                        {filteredTodos.map(({ id, checked, removed, value }) => {
                             return (
-                                <li key={todo.id}>
+                                <li key={id}>
                                     <input
                                         type="checkbox"
-                                        disabled={todo.removed}
-                                        checked={todo.checked}
-                                        onChange={() => handleOnChecked(todo.id, todo.checked)}
+                                        disabled={removed}
+                                        checked={checked}
+                                        onChange={() => handleOnChecked(id)}
                                     />
                                     <input
                                         type="text"
-                                        disabled={todo.checked || todo.removed}
-                                        value={todo.value}
-                                        onChange={(e) => handleOnEdit(todo.id, e.target.value)}
+                                        disabled={checked || removed}
+                                        value={value}
+                                        onChange={(e) => handleOnEdit(id, e.target.value)}
                                     />
-                                    <button onClick={() => handleOnRemove(todo.id, todo.removed)}>{todo.removed ? '復元' : '削除'}
+                                    <button onClick={() => handleOnRemove(id)}>{removed ? '復元' : '削除'}
                                     </button>
                                 </li>
                             );
