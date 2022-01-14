@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 
 type Todo = {
     value: string;
+    readonly id: number;
 }
 
 export default function Home() {
@@ -16,10 +17,15 @@ export default function Home() {
 
         const newTodo: Todo = {
             value: text,
+            id: new Date().getTime(),
         };
 
         setTodos([newTodo, ...todos]);
         setText('');
+    };
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setText(e.target.value);
     };
 
 
@@ -40,9 +46,10 @@ export default function Home() {
                             handleOnSubmit();
                         }}
                     >
-                        <input type="text"
+                        <input
+                            type="text"
                             value={text}
-                            onChange={(e) => setText(e.target.value)}
+                            onChange={(e) => handleOnChange(e)}
                         />
                         <input
                             type="submit"
@@ -50,6 +57,11 @@ export default function Home() {
                             onSubmit={handleOnSubmit}
                         />
                     </form>
+                    <ul>
+                        {todos.map((todo) => {
+                            return <li key={todo.id}>{todo.value}</li>;
+                        })}
+                    </ul>
                 </div>
             </main>
 
