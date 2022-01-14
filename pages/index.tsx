@@ -7,6 +7,7 @@ type Todo = {
     value: string;
     readonly id: number;
     checked: boolean;
+    removed: boolean;
 };
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
             value: text,
             id: new Date().getTime(),
             checked: false,
+            removed: false,
         };
 
         setTodos([newTodo, ...todos]);
@@ -45,6 +47,17 @@ export default function Home() {
         const newTodos = todos.map((todo) => {
             if (todo.id === id) {
                 todo.checked = !checked;
+            }
+            return todo;
+        });
+
+        setTodos(newTodos);
+    };
+
+    const handleOnRemove = (id: number, removed: boolean) => {
+        const newTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                todo.removed = !removed;
             }
             return todo;
         });
@@ -87,15 +100,18 @@ export default function Home() {
                                 <li key={todo.id}>
                                     <input
                                         type="checkbox"
+                                        disabled={todo.removed}
                                         checked={todo.checked}
                                         onChange={() => handleOnChecked(todo.id, todo.checked)}
                                     />
                                     <input
                                         type="text"
-                                        disabled={todo.checked}
+                                        disabled={todo.checked || todo.removed}
                                         value={todo.value}
                                         onChange={(e) => handleOnEdit(todo.id, e.target.value)}
                                     />
+                                    <button onClick={() => handleOnRemove(todo.id, todo.removed)}>{todo.removed ? '復元' : '削除'}
+                                    </button>
                                 </li>
                             );
                         })}
