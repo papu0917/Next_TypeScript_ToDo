@@ -83,6 +83,11 @@ export default function Home() {
         }
     });
 
+    const handleOnEmpty = () => {
+        const newTodos = todos.filter((todo) => !todo.removed);
+        setTodos(newTodos);
+    };
+
 
     return (
         <div className={styles.container}>
@@ -103,25 +108,34 @@ export default function Home() {
                         <option value="unchecked">現在のタスク</option>
                         <option value="removed">ゴミ箱</option>
                     </select>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleOnSubmit();
-                        }}
-                    >
-                        <input
-                            type="text"
-                            disabled={filter === 'checked' || filter === 'removed'}
-                            value={text}
-                            onChange={(e) => handleOnChange(e)}
-                        />
-                        <input
-                            type="submit"
-                            disabled={filter === 'checked' || filter === 'removed'}
-                            value="追加"
-                            onSubmit={handleOnSubmit}
-                        />
-                    </form>
+                    {filter === 'removed' ? (
+                        <button
+                            onClick={(handleOnEmpty)}
+                            disabled={todos.filter((todo) => todo.removed).length === 0}
+                        >
+                            ゴミ箱を空にする
+                        </button>
+                    ) : (
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleOnSubmit();
+                            }}
+                        >
+                            <input
+                                type="text"
+                                disabled={filter === 'checked'}
+                                value={text}
+                                onChange={(e) => handleOnChange(e)}
+                            />
+                            <input
+                                type="submit"
+                                disabled={filter === 'checked'}
+                                value="追加"
+                                onSubmit={handleOnSubmit}
+                            />
+                        </form>
+                    )}
                     <ul>
                         {filteredTodos.map((todo) => {
                             return (
