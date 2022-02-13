@@ -3,14 +3,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Button } from '../components/atoms/button';
-import { FILTER, Filter } from '../const';
+import { FILTER, Filter } from '../consts';
+import { Todo } from '../types/todo';
 
-type Todo = {
-    value: string;
-    readonly id: number;
-    checked: boolean;
-    removed: boolean;
-};
+
 
 
 export default function Home() {
