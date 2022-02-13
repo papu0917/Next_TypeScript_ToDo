@@ -1,4 +1,4 @@
-import { TodoTemplate } from '../components/templates/todo';
+import { TodoTemplate } from '~/components/templates/todo';
 
 const Home = () => {
   return <TodoTemplate />
