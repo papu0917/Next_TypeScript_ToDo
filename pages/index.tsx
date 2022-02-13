@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { Button } from '../components/atoms/button';
+import { FILTER, Filter } from '../const';
 
 type Todo = {
     value: string;
@@ -10,12 +12,11 @@ type Todo = {
     removed: boolean;
 };
 
-type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
 
 export default function Home() {
     const [text, setText] = useState('');
     const [todos, setTodos] = useState<Todo[]>([]);
-    const [filter, setFilter] = useState<Filter>('all');
+    const [filter, setFilter] = useState<Filter>(FILTER.ALL);
 
     const handleOnSubmit = () => {
         if (!text) return
@@ -70,13 +71,13 @@ export default function Home() {
 
     const filteredTodos = todos.filter((todo) => {
         switch (filter) {
-            case 'all':
+            case FILTER.ALL:
                 return !todo.removed;
-            case 'checked':
+            case FILTER.CHECKED:
                 return todo.checked && !todo.removed;
-            case 'unchecked':
+            case FILTER.UNCHECKED:
                 return !todo.checked && !todo.removed;
-            case 'removed':
+            case FILTER.REMOVED:
                 return todo.removed;
             default:
                 return todo;
@@ -100,15 +101,15 @@ export default function Home() {
             <main className={styles.main}>
                 <h1 className={styles.title}>ToDo App</h1>
                 <div>
-                    <select defaultValue="all"
+                    <select defaultValue={FILTER.ALL}
                         onChange={(e) => setFilter(e.target.value as Filter)}
                     >
-                        <option value="all">すべてのタスク</option>
-                        <option value="checked">完了したタスク</option>
-                        <option value="unchecked">現在のタスク</option>
-                        <option value="removed">ゴミ箱</option>
+                        <option value={FILTER.ALL}>すべてのタスク</option>
+                        <option value={FILTER.CHECKED}>完了したタスク</option>
+                        <option value={FILTER.UNCHECKED}>現在のタスク</option>
+                        <option value={FILTER.REMOVED}>ゴミ箱</option>
                     </select>
-                    {filter === 'removed' ? (
+                    {filter === FILTER.REMOVED ? (
                         <button
                             onClick={(handleOnEmpty)}
                             disabled={todos.filter((todo) => todo.removed).length === 0}
@@ -124,13 +125,13 @@ export default function Home() {
                         >
                             <input
                                 type="text"
-                                disabled={filter === 'checked'}
+                                disabled={filter === FILTER.CHECKED}
                                 value={text}
                                 onChange={(e) => handleOnChange(e)}
                             />
                             <input
                                 type="submit"
-                                disabled={filter === 'checked'}
+                                disabled={filter === FILTER.CHECKED}
                                 value="追加"
                                 onSubmit={handleOnSubmit}
                             />
@@ -152,14 +153,13 @@ export default function Home() {
                                         value={value}
                                         onChange={(e) => handleOnEdit(id, e.target.value)}
                                     />
-                                    <button onClick={() => handleOnRemove(id)}>{removed ? '復元' : '削除'}
-                                    </button>
+                                    <Button text={removed ? '復元' : '削除'} onClick={() => handleOnRemove(id)} />
                                 </li>
                             );
                         })}
                     </ul>
                 </div>
-            </main>
+            </main >
 
             <footer className={styles.footer}>
                 <a
@@ -173,6 +173,6 @@ export default function Home() {
                     </span>
                 </a>
             </footer>
-        </div>
+        </div >
     )
 }
