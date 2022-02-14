@@ -4,7 +4,7 @@ import { Todo } from "~/types/todo";
 import styles from '~/styles/Home.module.css';
 import Image from "next/image";
 import { Button } from "~/components/atoms/button";
-import { NextHead } from "~/components/atoms/head";
+import { NextHead } from "~/components/atoms/next-head";
 
 export const TodoTemplate = () => {
   const [text, setText] = useState('');
