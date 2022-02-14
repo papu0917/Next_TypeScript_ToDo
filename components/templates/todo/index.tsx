@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Filter, FILTER } from "~/consts";
 import { Todo } from "~/types/todo";
 import styles from '~/styles/Home.module.css';
-import Image from "next/image";
 import { Button } from "~/components/atoms/button";
 import { NextHead } from "~/components/atoms/next-head";
+import { NextImage } from "~/components/atoms/next-image";
 
 export const TodoTemplate = () => {
   const [text, setText] = useState('');
@@ -162,7 +162,7 @@ export const TodoTemplate = () => {
         >
           Powered by{' '}
           <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            <NextImage />
           </span>
         </a>
       </footer>
