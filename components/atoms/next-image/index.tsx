@@ -1,5 +1,7 @@
-import Image from "next/image"
+import Image, { ImageProps } from "next/image"
 
-export const NextImage = () => {
-    return <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+type NextImageProps = ImageProps;
+
+export const NextImage = (props: NextImageProps) => {
+    return <Image {...props} />
 }
