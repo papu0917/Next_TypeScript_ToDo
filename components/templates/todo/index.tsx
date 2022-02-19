@@ -4,7 +4,7 @@ import { Todo } from "~/types/todo";
 import styles from '~/styles/Home.module.css';
 import { Button } from "~/components/atoms/button";
 import { NextHead } from "~/components/atoms/next-head";
-import { NextImage } from "~/components/atoms/next-image";
+import { Footer } from "~/components/organisms/footer";
 
 export const TodoTemplate = () => {
     const [text, setText] = useState('');
@@ -153,19 +153,7 @@ export const TodoTemplate = () => {
                     </ul>
                 </div>
             </main >
-
-            <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{' '}
-                    <span className={styles.logo}>
-                        <NextImage src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-                    </span>
-                </a>
-            </footer>
+            <Footer/>
         </div >
     )
 }
